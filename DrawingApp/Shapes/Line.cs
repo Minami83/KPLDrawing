@@ -30,10 +30,10 @@ namespace DrawingApp.Shapes
             this.endPoint = endPoint;
         }
 
-        public override void draw()
+        /*public override void draw()
         {
             this.Graphics.DrawLine(this.pen, startPoint, endPoint);
-        }
+        }*/
 
         public override void translate(int xTrans, int yTrans)
         {
@@ -54,6 +54,18 @@ namespace DrawingApp.Shapes
             float distStartToEnd = Distance(startPoint, endPoint);
 
             return (Math.Abs(distToStart + distToEnd - distStartToEnd) < 3.0);
+        }
+
+        public override void StaticView()
+        {
+            this.pen.Color = Color.Black;
+            this.Graphics.DrawLine(this.pen, startPoint, endPoint);
+        }
+
+        public override void EditView()
+        {
+            this.pen.Color = Color.Black;
+            this.Graphics.DrawLine(this.pen, startPoint, endPoint);
         }
     }
 }

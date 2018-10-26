@@ -92,14 +92,24 @@ namespace DrawingApp
 
         public DrawingObject GetObjectAt(int x, int y)
         {
+            DeselectAll();
             foreach (DrawingObject drawingObject in drawingObjects)
             {
                 if (drawingObject.intersect(x,y))
                 {
+                    drawingObject.Select();
                     return drawingObject;
                 }
             }
             return null;
+        }
+
+        public void DeselectAll()
+        {
+            foreach (DrawingObject drawingObject in drawingObjects)
+            {
+                drawingObject.Deselect();
+            }
         }
     }
 }

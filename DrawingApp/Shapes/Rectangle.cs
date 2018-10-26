@@ -60,11 +60,11 @@ namespace DrawingApp.Shapes
             }
         }
 
-        public override void draw()
+        /*public override void draw()
         {
             adjuster();
             this.Graphics.DrawRectangle(this.pen, this.startPoint.X, this.startPoint.Y, this.Width, this.Height);
-        }
+        }*/
 
         public override void translate(int xTrans, int yTrans)
         {
@@ -84,6 +84,20 @@ namespace DrawingApp.Shapes
             {
                 return false;
             }
+        }
+
+        public override void StaticView()
+        {
+            adjuster();
+            this.pen.Color = Color.Black;
+            this.Graphics.DrawRectangle(this.pen, this.startPoint.X, this.startPoint.Y, this.Width, this.Height);
+        }
+
+        public override void EditView()
+        {
+            adjuster();
+            this.pen.Color = Color.Red;
+            this.Graphics.DrawRectangle(this.pen, this.startPoint.X, this.startPoint.Y, this.Width, this.Height);
         }
     }
 }
