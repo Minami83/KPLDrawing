@@ -30,6 +30,16 @@ namespace DrawingApp
             this.MouseDown += DefaultCanvas_MouseDown;
             this.MouseMove += DefaultCanvas_MouseMove;
             this.MouseUp += DefaultCanvas_MouseUp;
+            this.KeyDown += DefaultCanvas_KeyDown;
+        }
+
+        private void DefaultCanvas_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(this.activeTool != null)
+            {
+                this.activeTool.ToolKeyDown(sender, e);
+                this.Repaint();
+            }
         }
 
         private void DefaultCanvas_MouseDown(object sender, MouseEventArgs e)
@@ -90,9 +100,10 @@ namespace DrawingApp
             this.Repaint();
         }
 
-        public DrawingObject GetObjectAt(int x, int y)
+        public DrawingObject GetObjectAt(int x, int y, bool multiSelect)
         {
-            DeselectAll();
+            if (!multiSelect)
+                DeselectAll();
             foreach (DrawingObject drawingObject in drawingObjects)
             {
                 if (drawingObject.intersect(x,y))
@@ -110,6 +121,12 @@ namespace DrawingApp
             {
                 drawingObject.Deselect();
             }
+        }
+
+        public void cleaning(HashSet<DrawingObject> drawingObjects)
+        {
+            this.drawingObjects = new List<DrawingObject>(this.drawingObjects.Except(drawingObjects));
+            this.Repaint();
         }
     }
 }

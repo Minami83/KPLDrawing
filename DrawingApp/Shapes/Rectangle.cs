@@ -90,6 +90,8 @@ namespace DrawingApp.Shapes
         {
             adjuster();
             this.pen.Color = Color.Black;
+            String a = "X: " + this.startPoint.X + " Y: " + this.startPoint.Y + " width: " + this.Width + " height: " + this.Height + " pen: " + this.pen;
+            Console.WriteLine(a);
             this.Graphics.DrawRectangle(this.pen, this.startPoint.X, this.startPoint.Y, this.Width, this.Height);
         }
 
@@ -97,6 +99,8 @@ namespace DrawingApp.Shapes
         {
             adjuster();
             this.pen.Color = Color.Red;
+            String a = "X: " + this.startPoint.X + " Y: " + this.startPoint.Y + " width: " + this.Width + " height: " + this.Height + " pen: " + this.pen; 
+            Console.WriteLine(a);
             this.Graphics.DrawRectangle(this.pen, this.startPoint.X, this.startPoint.Y, this.Width, this.Height);
         }
     }

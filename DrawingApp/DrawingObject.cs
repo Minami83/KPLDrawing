@@ -13,7 +13,7 @@ namespace DrawingApp
         public Guid ID { get; set; }
         public Graphics Graphics { get; set; }
 
-        private DrawingState state;
+        public DrawingState state;
 
         public DrawingObject()
         {

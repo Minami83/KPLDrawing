@@ -41,6 +41,11 @@ namespace DrawingApp.Tools
             this.CheckOnClick = true;
         }
 
+        public void ToolKeyDown(object sender, KeyEventArgs e)
+        {
+            // do nothing
+        }
+
         public void ToolMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
