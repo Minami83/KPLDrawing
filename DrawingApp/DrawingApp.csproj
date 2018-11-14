@@ -59,16 +59,22 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="IObservable.cs" />
+    <Compile Include="IObserver.cs" />
     <Compile Include="ITool.cs" />
     <Compile Include="ICanvas.cs" />
     <Compile Include="IToolBox.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapes\Composite.cs" />
+    <Compile Include="Shapes\Connector.cs" />
     <Compile Include="Shapes\Line.cs" />
     <Compile Include="Shapes\Rectangle.cs" />
     <Compile Include="States\EditState.cs" />
     <Compile Include="States\StaticState.cs" />
+    <Compile Include="Tools\ConnectorTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Tools\LineTool.cs">
       <SubType>Component</SubType>
     </Compile>
