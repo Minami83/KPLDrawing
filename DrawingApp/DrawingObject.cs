@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DrawingApp
 {
-    public abstract class DrawingObject
+    public abstract class DrawingObject : IObserver, IObservable
     {
         public Guid ID { get; set; }
         public Graphics Graphics { get; set; }
@@ -46,5 +46,24 @@ namespace DrawingApp
         public abstract void translate(int xTrans, int yTrans);
         public abstract bool intersect(int x, int y);
 
+        public virtual void Update(int type, int dx, int dy)
+        {
+            
+        }
+
+        public virtual void onChange(int dx, int dy)
+        {
+            
+        }
+
+        public virtual void addObserver(int type, DrawingObject observer)
+        {
+            
+        }
+
+        public virtual void removeObserver(int type, DrawingObject observer)
+        {
+            
+        }
     }
 }
