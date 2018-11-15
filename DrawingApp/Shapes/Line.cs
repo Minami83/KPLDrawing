@@ -11,6 +11,7 @@ namespace DrawingApp.Shapes
     {
         public Point startPoint { get; set; }
         public Point endPoint { get; set; }
+        public List<List<DrawingObject>> observersList;
 
         private Pen pen;
 
@@ -18,6 +19,11 @@ namespace DrawingApp.Shapes
         {
             this.pen = new Pen(Color.Black);
             pen.Width = 1.5f;
+            List<DrawingObject> empty_list = new List<DrawingObject>();
+            List<DrawingObject> empty_list2 = new List<DrawingObject>();
+            this.observersList = new List<List<DrawingObject>>();
+            this.observersList.Add(empty_list);
+            this.observersList.Add(empty_list2);
         }
 
         public Line(Point startPoint) : this()
@@ -39,6 +45,7 @@ namespace DrawingApp.Shapes
         {
             this.startPoint = new Point(this.startPoint.X + xTrans, this.startPoint.Y + yTrans);
             this.endPoint = new Point(this.endPoint.X + xTrans, this.endPoint.Y + yTrans);
+            this.onChange(xTrans, yTrans);
         }
 
         private float Distance(Point a, Point b)
@@ -64,8 +71,31 @@ namespace DrawingApp.Shapes
 
         public override void EditView()
         {
-            this.pen.Color = Color.Black;
+            this.pen.Color = Color.Red;
             this.Graphics.DrawLine(this.pen, startPoint, endPoint);
+        }
+
+        public override void onChange(int dx, int dy)
+        {
+            int i = 0;
+            foreach (List<DrawingObject> observers in observersList)
+            {
+                foreach (DrawingObject observer in observers)
+                {
+                    observer.Update(i, dx, dy);
+                }
+                i++;
+            }
+        }
+
+        public override void addObserver(int type, DrawingObject observer)
+        {
+            this.observersList[type].Add(observer);
+        }
+
+        public override void removeObserver(int type, DrawingObject observer)
+        {
+            this.observersList[type].Remove(observer);
         }
     }
 }

@@ -100,6 +100,12 @@ namespace DrawingApp
             this.Repaint();
         }
 
+        public void RemoveDrawingObject(DrawingObject drawingObject)
+        {
+            this.drawingObjects.Remove(drawingObject);
+            this.Repaint();
+        }
+
         public DrawingObject GetObjectAt(int x, int y, bool multiSelect)
         {
             if (!multiSelect)

@@ -51,19 +51,21 @@ namespace DrawingApp.Tools
             if (e.Button == MouseButtons.Left)
             {
                 this.rectangle = new Rectangle(new System.Drawing.Point(e.X, e.Y));
+                this.rectangle.endPoint = new System.Drawing.Point(e.X, e.Y);
+                this.canvas.AddDrawingObject(this.rectangle);
             }
         }
 
         public void ToolMouseMove(object sender, MouseEventArgs e)
         {
-           
+            if (this.rectangle != null && e.Button == MouseButtons.Left)
+                this.rectangle.endPoint = new System.Drawing.Point(e.X, e.Y);
         }
         public void ToolMouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 rectangle.endPoint = new System.Drawing.Point(e.X, e.Y);
-                this.canvas.AddDrawingObject(this.rectangle);
             }
         }
     }

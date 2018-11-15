@@ -51,6 +51,7 @@ namespace DrawingApp.Tools
                 DrawingObject compositeObject = new Composite(this.drawingObjects);
                 this.canvas.AddDrawingObject(compositeObject);
                 this.canvas.cleaning(this.drawingObjects);
+                this.drawingObjects = new HashSet<DrawingObject>();
             }
         }
 

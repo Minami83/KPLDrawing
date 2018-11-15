@@ -53,23 +53,34 @@ namespace DrawingApp.Tools
             {
                 start_obj = this.canvas.GetObjectAt(e.X, e.Y, false);
                 this.connector = new Connector(new System.Drawing.Point(e.X, e.Y));
+                this.connector.endPoint = new System.Drawing.Point(e.X, e.Y);
+                this.canvas.AddDrawingObject(this.connector);
                 //start_obj.addObserver(0, this.connector);
             }
         }
 
         public void ToolMouseMove(object sender, MouseEventArgs e)
         {
-
+            if (e.Button == MouseButtons.Left)
+                this.connector.endPoint = new System.Drawing.Point(e.X, e.Y);
         }
         public void ToolMouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (true)
             {
                 end_obj = this.canvas.GetObjectAt(e.X, e.Y, false);
                 connector.endPoint = new System.Drawing.Point(e.X, e.Y);
-                start_obj.addObserver(0, this.connector);
-                end_obj.addObserver(1, this.connector);
-                this.canvas.AddDrawingObject(this.connector);
+                if (end_obj == null || end_obj == this.connector)
+                {
+                    Console.WriteLine("removingObj");
+                    this.canvas.RemoveDrawingObject(this.connector);
+                }
+                else if (this.connector != null && start_obj != null && end_obj != null)
+                {
+                    start_obj.addObserver(0, this.connector);
+                    end_obj.addObserver(1, this.connector);
+                    this.canvas.AddDrawingObject(this.connector);
+                }
             }
         }
     }
