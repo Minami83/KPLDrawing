@@ -16,5 +16,7 @@ namespace DrawingApp
         void RemoveDrawingObject(DrawingObject drawingObject);
         DrawingObject GetObjectAt(int x, int y, bool multiSelect);
         void cleaning(HashSet<DrawingObject> drawingObjects);
+        void UndoClicked();
+        void AddToUndo(DrawingObject drawingObject);
     }
 }

@@ -53,6 +53,10 @@ namespace DrawingApp.Tools
                 this.canvas.cleaning(this.drawingObjects);
                 this.drawingObjects = new HashSet<DrawingObject>();
             }
+            else if(e.Control && e.KeyCode == Keys.Z)
+            {
+                this.canvas.UndoClicked();
+            }
         }
 
         public void ToolMouseDown(object sender, MouseEventArgs e)
@@ -72,7 +76,12 @@ namespace DrawingApp.Tools
                 foreach (DrawingObject drawingObject in drawingObjects)
                 {
                     if (drawingObject != null && !CtrlKeyisPressed())
+                    {
                         drawingObject.translate(xTrans, yTrans);
+                        drawingObject.addMemento();
+                        this.canvas.AddToUndo(drawingObject);
+                    }
+                        
                 }
             }
             
@@ -80,6 +89,16 @@ namespace DrawingApp.Tools
 
         public void ToolMouseUp(object sender, MouseEventArgs e)
         {
+            
+            /*foreach (DrawingObject drawingObject in drawingObjects)
+            {
+                if(drawingObject != null)
+                {
+                    drawingObject.addMemento();
+                    this.canvas.AddToUndo(drawingObject);
+                }
+                
+            }*/
             if (!CtrlKeyisPressed())
                 this.drawingObjects.Clear();
         }

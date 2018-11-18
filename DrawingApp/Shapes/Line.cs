@@ -19,6 +19,7 @@ namespace DrawingApp.Shapes
         {
             this.pen = new Pen(Color.Black);
             pen.Width = 1.5f;
+            this.memento = new DrawingObjectMemento();
             List<DrawingObject> empty_list = new List<DrawingObject>();
             List<DrawingObject> empty_list2 = new List<DrawingObject>();
             this.observersList = new List<List<DrawingObject>>();
@@ -96,6 +97,29 @@ namespace DrawingApp.Shapes
         public override void removeObserver(int type, DrawingObject observer)
         {
             this.observersList[type].Remove(observer);
+        }
+
+        public override void addMemento()
+        {
+            Dictionary<string, Point> currentState = new Dictionary<string, Point>();
+            currentState.Add("start", this.startPoint);
+            currentState.Add("end", this.endPoint);
+            this.memento.saveMemento(currentState);
+        }
+
+        public override bool removeMemento()
+        {
+            Dictionary<string, Point> lastState = this.memento.retriveMemento();
+            if (lastState == null)
+            {
+                return false;
+            }
+            int dx = lastState["start"].X - this.startPoint.X;
+            int dy = lastState["start"].Y - this.startPoint.Y;
+            this.startPoint = lastState["start"];
+            this.endPoint = lastState["end"];
+            onChange(dx, dy);
+            return true;
         }
     }
 }
