@@ -9,46 +9,44 @@ namespace DrawingApp
 {
     public class DrawingObjectMemento : IMemento
     {
-        public Stack<Dictionary<string, Point>> stateList;
-        private int changed;
+        public Stack<Dictionary<string, Point>> undoStateList;
+        public Stack<Dictionary<string, Point>> redoStateList;
 
         public DrawingObjectMemento()
         {
-            this.stateList = new Stack<Dictionary<string, Point>>();
+            this.undoStateList = new Stack<Dictionary<string, Point>>();
+            this.redoStateList = new Stack<Dictionary<string, Point>>();
         }
 
-        public Dictionary<string, Point> retriveMemento()
+        public Dictionary<string, Point> retriveUndoMemento()
         {
-            //stateSlicer();
-            if (stateList.Count != 0)
+            if (undoStateList.Count != 0)
             {
-                Dictionary<string, Point> lastState = this.stateList.Pop();
+                Dictionary<string, Point> lastState = this.undoStateList.Pop();
                 return lastState;
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
-        public void saveMemento(Dictionary<string, Point> currentState)
+        public void saveUndoMemento(Dictionary<string, Point> currentState)
         {
-            this.stateList.Push(currentState);
+            this.undoStateList.Push(currentState);
         }
 
-        public void stateSlicer()
+        public Dictionary<string, Point> retriveRedoMemento()
         {
-            if (this.stateList.Count >= 3)
+            if (redoStateList.Count != 0)
             {
-                Stack<Dictionary<string, Point>> slicedState = new Stack<Dictionary<string, Point>>();
-                int i = 0;
-                foreach (var state in stateList)
-                {
-                    if ((i % 2) == 0)
-                        slicedState.Push(state);
-                }
-                this.stateList = slicedState;
+                Dictionary<string, Point> lastState = this.redoStateList.Pop();
+                return lastState;
             }
+            return null;
         }
+
+        public void saveRedoMemento(Dictionary<string, Point> currentState)
+        {
+            this.redoStateList.Push(currentState);
+        }
+
     }
 }

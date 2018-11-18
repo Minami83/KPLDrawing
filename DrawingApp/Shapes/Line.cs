@@ -104,12 +104,28 @@ namespace DrawingApp.Shapes
             Dictionary<string, Point> currentState = new Dictionary<string, Point>();
             currentState.Add("start", this.startPoint);
             currentState.Add("end", this.endPoint);
-            this.memento.saveMemento(currentState);
+            this.memento.saveUndoMemento(currentState);
         }
 
         public override bool removeMemento()
         {
-            Dictionary<string, Point> lastState = this.memento.retriveMemento();
+            Dictionary<string, Point> lastState = this.memento.retriveUndoMemento();
+            if (lastState == null)
+            {
+                return false;
+            }
+            this.memento.saveRedoMemento(lastState);
+            int dx = lastState["start"].X - this.startPoint.X;
+            int dy = lastState["start"].Y - this.startPoint.Y;
+            this.startPoint = lastState["start"];
+            this.endPoint = lastState["end"];
+            onChange(dx, dy);
+            return true;
+        }
+
+        public override bool restoreMemento()
+        {
+            Dictionary<string, Point> lastState = this.memento.retriveRedoMemento();
             if (lastState == null)
             {
                 return false;

@@ -75,5 +75,10 @@ namespace DrawingApp
         {
             return true;
         }
+
+        public virtual bool restoreMemento()
+        {
+            return true;
+        }
     }
 }

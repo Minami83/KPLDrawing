@@ -18,5 +18,6 @@ namespace DrawingApp
         void cleaning(HashSet<DrawingObject> drawingObjects);
         void UndoClicked();
         void AddToUndo(DrawingObject drawingObject);
+        void RedoClicked();
     }
 }

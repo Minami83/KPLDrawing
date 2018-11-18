@@ -145,6 +145,12 @@ namespace DrawingApp
             this.Repaint();
         }
 
+        public void RedoClicked()
+        {
+            this.undoredo.Unexecute();
+            this.Repaint();
+        }
+
         public void AddToUndo(DrawingObject drawingObject)
         {
             this.undoredo.addUndo(drawingObject);

@@ -57,6 +57,10 @@ namespace DrawingApp.Tools
             {
                 this.canvas.UndoClicked();
             }
+            else if(e.Control && e.KeyCode == Keys.Y)
+            {
+                this.canvas.RedoClicked();
+            }
         }
 
         public void ToolMouseDown(object sender, MouseEventArgs e)

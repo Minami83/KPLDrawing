@@ -9,7 +9,9 @@ namespace DrawingApp
 {
     public interface IMemento
     {
-        void saveMemento(Dictionary<string, Point> currentState);
-        Dictionary<string, Point> retriveMemento();
+        void saveUndoMemento(Dictionary<string, Point> currentState);
+        Dictionary<string, Point> retriveUndoMemento();
+        void saveRedoMemento(Dictionary<string, Point> currentState);
+        Dictionary<string, Point> retriveRedoMemento();
     }
 }
