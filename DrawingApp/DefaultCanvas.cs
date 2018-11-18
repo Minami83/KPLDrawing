@@ -12,6 +12,7 @@ namespace DrawingApp
     {
         private ITool activeTool;
         private List<DrawingObject> drawingObjects;
+        public UndoRedo undoredo;
 
         public DefaultCanvas()
         {
@@ -22,6 +23,7 @@ namespace DrawingApp
         {
             this.drawingObjects = new List<DrawingObject>();
             this.DoubleBuffered = true;
+            this.undoredo = new UndoRedo();
 
             this.BackColor = Color.White;
             this.Dock = DockStyle.Fill;
@@ -97,6 +99,7 @@ namespace DrawingApp
         public void AddDrawingObject(DrawingObject drawingObject)
         {
             this.drawingObjects.Add(drawingObject);
+            AddToUndo(drawingObject);
             this.Repaint();
         }
 
@@ -133,6 +136,24 @@ namespace DrawingApp
         {
             this.drawingObjects = new List<DrawingObject>(this.drawingObjects.Except(drawingObjects));
             this.Repaint();
+        }
+
+        public void UndoClicked()
+        {
+            Console.WriteLine("undo clicked");
+            this.undoredo.Execute();
+            this.Repaint();
+        }
+
+        public void RedoClicked()
+        {
+            this.undoredo.Unexecute();
+            this.Repaint();
+        }
+
+        public void AddToUndo(DrawingObject drawingObject)
+        {
+            this.undoredo.addUndo(drawingObject);
         }
     }
 }

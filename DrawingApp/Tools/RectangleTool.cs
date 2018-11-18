@@ -66,6 +66,7 @@ namespace DrawingApp.Tools
             if (e.Button == MouseButtons.Left)
             {
                 rectangle.endPoint = new System.Drawing.Point(e.X, e.Y);
+                this.rectangle.addMemento();
             }
         }
     }

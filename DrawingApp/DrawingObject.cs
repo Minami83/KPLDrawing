@@ -12,7 +12,7 @@ namespace DrawingApp
     {
         public Guid ID { get; set; }
         public Graphics Graphics { get; set; }
-
+        public DrawingObjectMemento memento;
         public DrawingState state;
 
         public DrawingObject()
@@ -64,6 +64,21 @@ namespace DrawingApp
         public virtual void removeObserver(int type, DrawingObject observer)
         {
             
+        }
+
+        public virtual void addMemento()
+        {
+
+        }
+
+        public virtual bool removeMemento()
+        {
+            return true;
+        }
+
+        public virtual bool restoreMemento()
+        {
+            return true;
         }
     }
 }
