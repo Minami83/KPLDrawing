@@ -13,6 +13,7 @@ namespace DrawingApp
         void Repaint();
         void SetBackgroundColor(Color color);
         void AddDrawingObject(DrawingObject drawingObject);
+        void RemoveDrawingObject(DrawingObject drawingObject);
         DrawingObject GetObjectAt(int x, int y, bool multiSelect);
         void cleaning(HashSet<DrawingObject> drawingObjects);
     }

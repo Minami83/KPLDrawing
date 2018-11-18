@@ -54,17 +54,24 @@ namespace DrawingApp.Tools
         public void ToolMouseDown(object sender, MouseEventArgs e)
         {
             line = new Line(new System.Drawing.Point(e.X, e.Y));
-        }
-
-        public void ToolMouseUp(object sender, MouseEventArgs e)
-        {
             line.endPoint = new System.Drawing.Point(e.X, e.Y);
             canvas.AddDrawingObject(line);
         }
 
+        public void ToolMouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                line.endPoint = new System.Drawing.Point(e.X, e.Y);
+            }
+        }
+
         public void ToolMouseMove(object sender, MouseEventArgs e)
         {
-            
+            if (e.Button == MouseButtons.Left)
+            {
+                line.endPoint = new System.Drawing.Point(e.X, e.Y);
+            }
         }
     }
 }
