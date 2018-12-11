@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace DrawingApp.Shapes
                 Console.WriteLine(a);
             }
             this.drawingObjects = new List<DrawingObject>(drawingObjects);
+            this.object_type = "Composite";
         }
 
         public override void EditView()
@@ -54,6 +56,26 @@ namespace DrawingApp.Shapes
             {
                 drawingObject.translate(xTrans, yTrans);
             }
+        }
+
+        public DrawingObject getLinetoTransform(Point clickPoint)
+        {
+            foreach(DrawingObject d in drawingObjects)
+            {
+                bool intersect = d.intersect(clickPoint.X, clickPoint.Y);
+                if (intersect && d.object_type == "Line") return d;
+            }
+            return null;
+        }
+
+        public void removeObject(DrawingObject drawingObject)
+        {
+            this.drawingObjects.Remove(drawingObject);
+        }
+
+        public void addObject(DrawingObject drawingObject)
+        {
+            this.drawingObjects.Add(drawingObject);
         }
     }
 }

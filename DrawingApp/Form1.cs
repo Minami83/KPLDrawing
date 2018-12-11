@@ -36,6 +36,7 @@ namespace DrawingApp
             this.toolbox.addTool(new RectangleTool());
             this.toolbox.addTool(new SelectionTool());
             this.toolbox.addTool(new ConnectorTool());
+            this.toolbox.addTool(new FreeLineTool());
             this.toolbox.ToolSelected += ToolBox_ToolSelected;
             #endregion
 

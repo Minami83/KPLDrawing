@@ -14,10 +14,12 @@ namespace DrawingApp
         public Graphics Graphics { get; set; }
         public DrawingObjectMemento memento;
         public DrawingState state;
+        public String object_type;
 
         public DrawingObject()
         {
             ID = Guid.NewGuid();
+            object_type = "drawing_object";
             this.ChangeState(StaticState.GetInstance());
         }
 
