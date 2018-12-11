@@ -71,11 +71,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapes\Composite.cs" />
     <Compile Include="Shapes\Connector.cs" />
+    <Compile Include="Shapes\ControlPoint.cs" />
     <Compile Include="Shapes\Line.cs" />
     <Compile Include="Shapes\Rectangle.cs" />
     <Compile Include="States\EditState.cs" />
     <Compile Include="States\StaticState.cs" />
     <Compile Include="Tools\ConnectorTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\FreeLineTool.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Tools\LineTool.cs">

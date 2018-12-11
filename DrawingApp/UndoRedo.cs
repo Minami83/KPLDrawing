@@ -35,7 +35,7 @@ namespace DrawingApp
             if (undoStack.Count != 0)
             {
                 DrawingObject lastChanged = undoStack.Pop();
-                bool stillExist = lastChanged.removeMemento();
+                lastChanged.removeMemento();
                 this.redoStack.Push(lastChanged);
             }
             Console.WriteLine("empty stack");

@@ -7,17 +7,19 @@ using System.Threading.Tasks;
 
 namespace DrawingApp.Shapes
 {
-    public class Line : DrawingObject
+    class ControlPoint : DrawingObject
     {
         public Point startPoint { get; set; }
         public Point endPoint { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+
         public List<List<DrawingObject>> observersList;
 
         private Pen pen;
 
-        public Line()
+        public ControlPoint()
         {
-            this.object_type = "Line";
             this.pen = new Pen(Color.Black);
             pen.Width = 1.5f;
             this.memento = new DrawingObjectMemento();
@@ -28,19 +30,47 @@ namespace DrawingApp.Shapes
             this.observersList.Add(empty_list2);
         }
 
-        public Line(Point startPoint) : this()
+        public ControlPoint(Point startPoint) : this()
         {
             this.startPoint = startPoint;
         }
 
-        public Line(Point startPoint, Point endPoint) : this(startPoint)
+        public ControlPoint(Point startPoint, Point endPoint) : this(startPoint)
         {
             this.endPoint = endPoint;
         }
 
+        private void adjuster()
+        {
+            if (this.endPoint.X >= this.startPoint.X)
+            {
+                this.Width = this.endPoint.X - this.startPoint.X;
+            }
+            else
+            {
+                this.Width = this.startPoint.X - this.endPoint.X;
+                int temp = this.startPoint.X;
+                this.startPoint = new Point(this.endPoint.X, this.startPoint.Y);
+                this.endPoint = new Point(temp, this.endPoint.Y);
+            }
+
+            if (this.endPoint.Y >= this.startPoint.Y)
+            {
+                this.Height = this.endPoint.Y - this.startPoint.Y;
+            }
+            else
+            {
+                this.Height = this.startPoint.Y - this.endPoint.Y;
+                int temp = this.startPoint.Y;
+                this.startPoint = new Point(this.startPoint.X, this.endPoint.Y);
+                this.endPoint = new Point(this.endPoint.X, temp);
+            }
+        }
+
         /*public override void draw()
         {
-            this.Graphics.DrawLine(this.pen, startPoint, endPoint);
+            adjuster();
+            this.Graphics.DrawRectangle(this.pen, this.startPoint.X, this.startPoint.Y, this.Width, this.Height);
         }*/
 
         public override void translate(int xTrans, int yTrans)
@@ -50,31 +80,36 @@ namespace DrawingApp.Shapes
             this.onChange(xTrans, yTrans);
         }
 
-        private float Distance(Point a, Point b)
-        {
-            return (float)Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
-        }
-
         public override bool intersect(int x, int y)
         {
             Point clickedPoint = new Point(x, y);
-            float distToStart = Distance(startPoint, clickedPoint);
-            float distToEnd = Distance(clickedPoint, endPoint);
-            float distStartToEnd = Distance(startPoint, endPoint);
-
-            return (Math.Abs(distToStart + distToEnd - distStartToEnd) < 3.0);
+            if (clickedPoint.X >= startPoint.X && clickedPoint.Y >= startPoint.Y
+                && clickedPoint.X <= endPoint.X && clickedPoint.Y <= endPoint.Y)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public override void StaticView()
         {
+            adjuster();
             this.pen.Color = Color.Black;
-            this.Graphics.DrawLine(this.pen, startPoint, endPoint);
+            String a = "X: " + this.startPoint.X + " Y: " + this.startPoint.Y + " width: " + this.Width + " height: " + this.Height + " pen: " + this.pen;
+            //Console.WriteLine(a);
+            this.Graphics.DrawRectangle(this.pen, this.startPoint.X, this.startPoint.Y, this.Width, this.Height);
         }
 
         public override void EditView()
         {
+            adjuster();
             this.pen.Color = Color.Red;
-            this.Graphics.DrawLine(this.pen, startPoint, endPoint);
+            String a = "X: " + this.startPoint.X + " Y: " + this.startPoint.Y + " width: " + this.Width + " height: " + this.Height + " pen: " + this.pen;
+            //Console.WriteLine(a);
+            this.Graphics.DrawRectangle(this.pen, this.startPoint.X, this.startPoint.Y, this.Width, this.Height);
         }
 
         public override void onChange(int dx, int dy)
@@ -137,25 +172,6 @@ namespace DrawingApp.Shapes
             this.endPoint = lastState["end"];
             onChange(dx, dy);
             return true;
-        }
-
-        public int getYinLine(int x)
-        {
-            double m = getSlope();
-            double closestYinLine = m * (x - startPoint.X) + startPoint.Y;
-            return (int)closestYinLine;
-        }
-
-        public double getSlope()
-        {
-            double m = (endPoint.Y - startPoint.Y) / (endPoint.X - startPoint.X);
-            return m;
-        }
-
-        public override void Update(int type, int dx, int dy)
-        {
-            if (type == 0) startPoint = new Point(startPoint.X + dx, startPoint.Y + dy);
-            else if (type == 1) endPoint = new Point(endPoint.X + dx, endPoint.Y + dy);
         }
     }
 }
