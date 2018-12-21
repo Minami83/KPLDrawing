@@ -80,27 +80,24 @@ namespace DrawingApp.Tools
             this.clickPoint = new Point(e.X, e.Y);
             if (selected_object != null && selected_object.object_type == "Line")
             {
-                Console.WriteLine("Line Clicked");
+                Console.Write("Line Clicked ");
+                Console.WriteLine(selected_object.ID);
                 addControlPoint(selected_object);
             }
             else if (selected_object != null && selected_object.object_type == "Composite")
             {
-                Console.WriteLine("Composite Clicked");
+                Console.Write("Composite Clicked ");
+                Console.WriteLine(selected_object.ID);
                 this.isComposite = true;
                 this.comp = (Composite)selected_object;
                 DrawingObject intersected_line = comp.getLinetoTransform(clickPoint);
-                Line li = (Line)intersected_line;
-                addControlPoint(li);
+                addControlPoint(intersected_line);
                 comp.removeObject(intersected_line);
             }
         }
 
-        public void MouseUpLine()
+        public void MouseUpLine(HashSet<DrawingObject> drawingObjects)
         {
-            HashSet<DrawingObject> drawingObjects = new HashSet<DrawingObject>();
-            drawingObjects.Add(this.new_line1);
-            drawingObjects.Add(this.new_line2);
-
             DrawingObject composite = new Composite(drawingObjects);
             this.canvas.AddDrawingObject(composite);
             this.canvas.cleaning(drawingObjects);
@@ -108,26 +105,32 @@ namespace DrawingApp.Tools
             this.control_point = null;
         }
 
-        public void MouseUpComposite()
+        public void MouseUpComposite(HashSet<DrawingObject> drawingObjects)
         {
-            HashSet<DrawingObject> drawingObjects = new HashSet<DrawingObject>();
-            drawingObjects.Add(this.new_line1);
-            drawingObjects.Add(this.new_line2);
-
             this.comp.addObject(this.new_line1);
             this.comp.addObject(this.new_line2);
-            this.canvas.cleaning(drawingObjects);
-            this.canvas.RemoveDrawingObject(this.control_point);
-            this.control_point = null;
+            
         }
 
         public void ToolMouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && this.control_point != null)
             {
-                if (this.isComposite) MouseUpComposite();
-                else MouseUpLine();
+                HashSet<DrawingObject> drawingObjects = new HashSet<DrawingObject>();
+                drawingObjects.Add(this.new_line1);
+                drawingObjects.Add(this.new_line2);
+
+                if (this.isComposite) MouseUpComposite(drawingObjects);
+                else MouseUpLine(drawingObjects);
+                this.canvas.cleaning(drawingObjects);
+                this.canvas.RemoveDrawingObject(this.control_point);
+                this.control_point = null;
+                this.new_line1 = null;
+                this.new_line2 = null;
+                this.comp = null;
+                this.isComposite = false;
             }
+
         }
 
         public void ToolMouseMove(object sender, MouseEventArgs e)

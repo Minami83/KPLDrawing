@@ -47,6 +47,7 @@ namespace DrawingApp
             {
                 DrawingObject lastUndoed = redoStack.Pop();
                 lastUndoed.restoreMemento();
+                this.undoStack.Push(lastUndoed);
             }
         }
 

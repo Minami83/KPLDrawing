@@ -77,5 +77,32 @@ namespace DrawingApp.Shapes
         {
             this.drawingObjects.Add(drawingObject);
         }
+
+        public override void addMemento()
+        {
+            foreach (DrawingObject d in drawingObjects)
+            {
+                d.addMemento();
+            }
+        }
+
+        public override bool removeMemento()
+        {
+            foreach (DrawingObject d in drawingObjects)
+            {
+                d.removeMemento();
+            }
+            return true;
+        }
+
+        public override bool restoreMemento()
+        {
+            foreach (DrawingObject d in drawingObjects)
+            {
+                d.restoreMemento();
+            }
+            return true;
+        }
+
     }
 }

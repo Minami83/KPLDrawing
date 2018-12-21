@@ -79,6 +79,7 @@ namespace DrawingApp.Shapes
             this.startPoint = new Point(this.startPoint.X + xTrans, this.startPoint.Y + yTrans);
             this.endPoint = new Point(this.endPoint.X + xTrans, this.endPoint.Y + yTrans);
             this.onChange(xTrans, yTrans);
+            this.addMemento();
         }
 
         public override bool intersect(int x, int y)
@@ -167,6 +168,7 @@ namespace DrawingApp.Shapes
             {
                 return false;
             }
+            this.memento.saveUndoMemento(lastState);
             int dx = lastState["start"].X - this.startPoint.X;
             int dy = lastState["start"].Y - this.startPoint.Y;
             this.startPoint = lastState["start"];
