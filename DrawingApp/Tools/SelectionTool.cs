@@ -82,7 +82,7 @@ namespace DrawingApp.Tools
                     if (drawingObject != null && !CtrlKeyisPressed())
                     {
                         drawingObject.translate(xTrans, yTrans);
-                        drawingObject.addMemento();
+                        //drawingObject.addMemento();
                         this.canvas.AddToUndo(drawingObject);
                     }
                         

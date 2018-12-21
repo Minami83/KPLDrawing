@@ -48,6 +48,7 @@ namespace DrawingApp.Shapes
             this.startPoint = new Point(this.startPoint.X + xTrans, this.startPoint.Y + yTrans);
             this.endPoint = new Point(this.endPoint.X + xTrans, this.endPoint.Y + yTrans);
             this.onChange(xTrans, yTrans);
+            this.addMemento();
         }
 
         private float Distance(Point a, Point b)
